@@ -1,0 +1,59 @@
+- name: docker installation
+  become: yes
+  hosts: amazon_nodes
+  tasks:
+    - name: Install required dependencies
+      dnf:
+        name:
+          - dnf-plugins-core    
+        state: present
+
+    - name: Remove existing Docker repo if present
+      file:
+        path: /etc/yum.repos.d/docker-ce.repo
+        state: absent              
+
+    - name: Add Docker repository
+      command: dnf config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo
+
+    - name: Fix releasever to CentOS 9 in repo file
+      replace:
+        path: /etc/yum.repos.d/docker-ce.repo
+        regexp: '\$releasever'     
+        replace: '9'
+
+    - name: Update dnf and install Docker Engine
+      dnf:
+        name:
+          - docker-ce
+          - docker-ce-cli
+          - containerd.io
+          - docker-buildx-plugin
+          - docker-compose-plugin
+        state: latest
+        update_cache: true
+        allowerasing: true         
+
+    - name: Start and enable Docker service
+      systemd:
+        name: docker
+        state: started
+        enabled: yes
+
+    - name: Add ec2-user to docker group
+      user:
+        name: ec2-user
+        groups: docker
+        append: yes    
+    
+    - name: Install pip3                   
+      dnf:
+        name:
+          - python3-pip
+        state: present
+
+    - name: Install Docker Module for Python
+      pip:
+        name: docker
+        executable: pip3
+        extra_args: "--ignore-installed"
