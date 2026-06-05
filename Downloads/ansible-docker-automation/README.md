@@ -1,7 +1,7 @@
-Automated Docker installation across Ubuntu and Amazon Linux 2023 EC2 instances using Ansible.
-```
+# Automated Docker installation across Ubuntu and Amazon Linux 2023 EC2 instances using Ansible.
 
 ## Project Structure
+```
 ansible-docker-automation/
 ├── inventory.yml           # Host groups for Ubuntu and Amazon Linux
 ├── docker-playbook.yml     # Docker playbook for Ubuntu
