@@ -7,10 +7,11 @@ ansible-docker-automation/
 ├── docker-playbook.yml     # Docker playbook for Ubuntu
 └── Aldocker-playbook.yml   # Docker playbook for Amazon Linux
 ```
-## Prerequisites
-- Ansible installed on master node
+## Steps Followed
+- Ansible installed on Master node
 - AWS EC2 instances (Ubuntu + Amazon Linux 2023)
 - SSH key pair configured
+- Docker,Git and other dependencies,packages installed in Master node 
 
 ## Usage
 ```bash
